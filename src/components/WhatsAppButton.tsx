@@ -1,7 +1,6 @@
-
 const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = "5544991082160";
+    const phoneNumber = "5585856833127";
     const message = "Olá! Gostaria de saber mais sobre os planos da MATRIX IPTV.";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

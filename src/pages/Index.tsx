@@ -5,6 +5,7 @@ import PlatformIcons from '../components/PlatformIcons';
 import MovieCarousel from '../components/MovieCarousel';
 import DeviceGrid from '../components/DeviceGrid';
 import PricingSection from '../components/PricingSection';
+import FAQ from '../components/FAQ';
 import WhatsAppButton from '../components/WhatsAppButton';
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
       <MovieCarousel />
       <DeviceGrid />
       <PricingSection />
+      <FAQ />
       <WhatsAppButton />
       
       {/* Footer */}

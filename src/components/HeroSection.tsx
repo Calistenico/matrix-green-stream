@@ -13,19 +13,14 @@ const HeroSection = () => {
       {/* Hero content */}
       <div className="bg-black py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Logo */}
-          <div className="mb-8 animate-float">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="relative">
-                <div className="w-24 h-24 bg-gradient-to-br from-gray-800 to-gray-600 rounded-full flex items-center justify-center border-4 border-matrix-green">
-                  <span className="text-4xl font-bold text-matrix-green">M</span>
-                </div>
-              </div>
-              <div className="bg-white rounded-lg p-4 relative overflow-hidden">
-                <Tv className="w-16 h-16 text-matrix-green" />
-                <div className="absolute top-2 right-2 w-3 h-3 bg-matrix-green rounded-full animate-pulse"></div>
-                <div className="absolute bottom-2 left-2 text-xs font-bold text-matrix-green">TV</div>
-              </div>
+          {/* Logo Matrix */}
+          <div className="mb-8">
+            <div className="flex items-center justify-center mb-4">
+              <img 
+                src="/Logo Matrix.png" 
+                alt="Matrix IPTV Logo" 
+                className="w-32 h-32 md:w-48 md:h-48 object-contain"
+              />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-2">
               MATRIX <span className="text-matrix-green">IPTV</span>
@@ -38,9 +33,21 @@ const HeroSection = () => {
           </h2>
 
           {/* Support Button */}
-          <button className="bg-matrix-green text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-matrix-green-dark transition-colors inline-flex items-center gap-2">
+          <button className="bg-matrix-green text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-matrix-green-dark transition-colors inline-flex items-center gap-2 mb-8">
             📞 SUPORTE!
           </button>
+
+          {/* Video */}
+          <div className="max-w-2xl mx-auto">
+            <video 
+              controls 
+              className="w-full rounded-lg shadow-lg"
+              poster="/placeholder.svg"
+            >
+              <source src="/Vídeo do WhatsApp de 2025-06-21 à(s) 16.22.16_6b34769f.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos HTML5.
+            </video>
+          </div>
         </div>
       </div>
     </div>
