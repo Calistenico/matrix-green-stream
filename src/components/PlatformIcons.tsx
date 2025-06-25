@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 const PlatformIcons = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   const platforms = [
     { 
@@ -54,13 +55,18 @@ const PlatformIcons = () => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
-        // Reset para 0 quando chegar ao final da primeira sequência
+        // Reset instantâneo quando chegar ao final da primeira sequência
         if (nextIndex >= platforms.length) {
-          return 0;
+          setTimeout(() => {
+            setIsTransitioning(false);
+            setCurrentIndex(0);
+            setTimeout(() => setIsTransitioning(true), 50);
+          }, 1000);
+          return nextIndex;
         }
         return nextIndex;
       });
-    }, 2000); // Reduzido para 2 segundos para movimento mais fluido
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [platforms.length]);
@@ -86,7 +92,7 @@ const PlatformIcons = () => {
 
         <div className="relative overflow-hidden">
           <div 
-            className="flex transition-transform duration-1000 ease-linear"
+            className={`flex ${isTransitioning ? 'transition-transform duration-1000 ease-linear' : ''}`}
             style={{ 
               transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
               width: `${(duplicatedPlatforms.length * 100) / slidesPerView}%`

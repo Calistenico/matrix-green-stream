@@ -6,32 +6,32 @@ const DeviceGrid = () => {
     {
       name: 'Smart TV',
       icon: <Tv className="w-12 h-12 text-white" />,
-      image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=150&fit=crop'
+      image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop&auto=format'
     },
     {
       name: 'TV Box',
-      icon: <div className="w-12 h-12 bg-gray-700 rounded flex items-center justify-center text-white text-xs">BOX</div>,
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=150&fit=crop'
+      icon: <div className="w-12 h-12 bg-gray-700 rounded flex items-center justify-center text-white text-xs font-bold">BOX</div>,
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format'
     },
     {
       name: 'Stick TV',
-      icon: <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-white text-xs">STICK</div>,
-      image: 'https://images.unsplash.com/photo-1624461164770-1e1b9df8e2c2?w=200&h=150&fit=crop'
+      icon: <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-white text-xs font-bold">STICK</div>,
+      image: 'https://images.unsplash.com/photo-1624461164770-1e1b9df8e2c2?w=400&h=300&fit=crop&auto=format'
     },
     {
       name: 'Celular',
       icon: <Smartphone className="w-12 h-12 text-white" />,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=150&fit=crop'
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&auto=format'
     },
     {
       name: 'Tablet',
       icon: <Tablet className="w-12 h-12 text-white" />,
-      image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=200&h=150&fit=crop'
+      image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop&auto=format'
     },
     {
       name: 'Computador',
       icon: <Monitor className="w-12 h-12 text-white" />,
-      image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?w=200&h=150&fit=crop'
+      image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400&h=300&fit=crop&auto=format'
     }
   ];
 
@@ -49,7 +49,11 @@ const DeviceGrid = () => {
                 <img 
                   src={device.image} 
                   alt={device.name}
-                  className="w-full h-32 object-cover"
+                  className="w-full h-40 md:h-48 object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop&auto=format';
+                  }}
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   {device.icon}

@@ -5,6 +5,7 @@ import { useTMDBMovies, getTMDBImageUrl } from '../hooks/useTMDBMovies';
 const MovieCarousel = () => {
   const { data: movies, isLoading, error } = useTMDBMovies();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   useEffect(() => {
     if (!movies || movies.length === 0) return;
@@ -12,13 +13,18 @@ const MovieCarousel = () => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
-        // Reset para 0 quando chegar ao final da primeira sequência
+        // Reset instantâneo quando chegar ao final da primeira sequência
         if (nextIndex >= movies.length) {
-          return 0;
+          setTimeout(() => {
+            setIsTransitioning(false);
+            setCurrentIndex(0);
+            setTimeout(() => setIsTransitioning(true), 50);
+          }, 1000);
+          return nextIndex;
         }
         return nextIndex;
       });
-    }, 2500); // Movimento mais fluido
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [movies]);
@@ -65,6 +71,7 @@ const MovieCarousel = () => {
   const getSlidesPerView = () => {
     if (typeof window === 'undefined') return 4;
     if (window.innerWidth < 640) return 2;
+    if (window.innerWidth < 768) return 2;
     if (window.innerWidth < 1024) return 3;
     return 4;
   };
@@ -83,7 +90,7 @@ const MovieCarousel = () => {
 
         <div className="relative overflow-hidden">
           <div 
-            className="flex transition-transform duration-1000 ease-linear"
+            className={`flex ${isTransitioning ? 'transition-transform duration-1000 ease-linear' : ''}`}
             style={{ 
               transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
               width: `${(duplicatedMovies.length * 100) / slidesPerView}%`
@@ -96,7 +103,7 @@ const MovieCarousel = () => {
                 style={{ width: `${100 / duplicatedMovies.length}%` }}
               >
                 <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                  <div className="relative aspect-[2/3]">
+                  <div className="relative aspect-[2/3] min-h-[200px] sm:min-h-[250px] md:min-h-[300px]">
                     <img 
                       src={getTMDBImageUrl(movie.poster_path)} 
                       alt={movie.title}
