@@ -47,20 +47,29 @@ const PlatformIcons = () => {
     }
   ];
 
+  // Duplicar as plataformas para criar loop infinito
+  const duplicatedPlatforms = [...platforms, ...platforms];
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % platforms.length);
-    }, 3000);
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = prevIndex + 1;
+        // Reset para 0 quando chegar ao final da primeira sequência
+        if (nextIndex >= platforms.length) {
+          return 0;
+        }
+        return nextIndex;
+      });
+    }, 2000); // Reduzido para 2 segundos para movimento mais fluido
 
     return () => clearInterval(interval);
   }, [platforms.length]);
 
-  // Número de slides por visualização baseado no tamanho da tela
   const getSlidesPerView = () => {
     if (typeof window === 'undefined') return 3;
-    if (window.innerWidth < 640) return 2; // mobile
-    if (window.innerWidth < 1024) return 3; // tablet
-    return 5; // desktop
+    if (window.innerWidth < 640) return 2;
+    if (window.innerWidth < 1024) return 3;
+    return 5;
   };
 
   const slidesPerView = getSlidesPerView();
@@ -77,13 +86,17 @@ const PlatformIcons = () => {
 
         <div className="relative overflow-hidden">
           <div 
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)` }}
+            className="flex transition-transform duration-1000 ease-linear"
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
+              width: `${(duplicatedPlatforms.length * 100) / slidesPerView}%`
+            }}
           >
-            {platforms.map((platform, index) => (
+            {duplicatedPlatforms.map((platform, index) => (
               <div
-                key={index}
-                className="flex-shrink-0 px-2 w-1/2 sm:w-1/3 lg:w-1/5"
+                key={`${platform.name}-${index}`}
+                className="flex-shrink-0 px-2"
+                style={{ width: `${100 / duplicatedPlatforms.length}%` }}
               >
                 <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
                   <img 
@@ -103,21 +116,6 @@ const PlatformIcons = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Indicadores de navegação */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {Array.from({ length: Math.ceil(platforms.length / slidesPerView) }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index * slidesPerView)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                Math.floor(currentIndex / slidesPerView) === index 
-                  ? 'bg-matrix-green' 
-                  : 'bg-gray-600'
-              }`}
-            />
-          ))}
         </div>
       </div>
     </div>

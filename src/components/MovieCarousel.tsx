@@ -10,8 +10,15 @@ const MovieCarousel = () => {
     if (!movies || movies.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
-    }, 3000);
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = prevIndex + 1;
+        // Reset para 0 quando chegar ao final da primeira sequência
+        if (nextIndex >= movies.length) {
+          return 0;
+        }
+        return nextIndex;
+      });
+    }, 2500); // Movimento mais fluido
 
     return () => clearInterval(interval);
   }, [movies]);
@@ -52,11 +59,14 @@ const MovieCarousel = () => {
     );
   }
 
-  // Diferentes números de slides para diferentes tamanhos de tela
+  // Duplicar os filmes para criar loop infinito
+  const duplicatedMovies = [...movies, ...movies];
+
   const getSlidesPerView = () => {
-    if (window.innerWidth < 640) return 2; // mobile
-    if (window.innerWidth < 1024) return 3; // tablet
-    return 4; // desktop
+    if (typeof window === 'undefined') return 4;
+    if (window.innerWidth < 640) return 2;
+    if (window.innerWidth < 1024) return 3;
+    return 4;
   };
 
   const slidesPerView = getSlidesPerView();
@@ -73,13 +83,17 @@ const MovieCarousel = () => {
 
         <div className="relative overflow-hidden">
           <div 
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)` }}
+            className="flex transition-transform duration-1000 ease-linear"
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
+              width: `${(duplicatedMovies.length * 100) / slidesPerView}%`
+            }}
           >
-            {movies.map((movie) => (
+            {duplicatedMovies.map((movie, index) => (
               <div 
-                key={movie.id} 
-                className="flex-shrink-0 px-2 w-1/2 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                key={`${movie.id}-${index}`}
+                className="flex-shrink-0 px-2"
+                style={{ width: `${100 / duplicatedMovies.length}%` }}
               >
                 <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
                   <div className="relative aspect-[2/3]">
@@ -100,21 +114,6 @@ const MovieCarousel = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Indicadores de navegação para mobile */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {Array.from({ length: Math.ceil(movies.length / slidesPerView) }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                Math.floor(currentIndex / slidesPerView) === index 
-                  ? 'bg-matrix-green' 
-                  : 'bg-gray-600'
-              }`}
-            />
-          ))}
         </div>
 
         <div className="text-center mt-8">
