@@ -1,7 +1,8 @@
+
 const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = "5585856833127";
-    const message = "Olá! Gostaria de saber mais sobre os planos da MATRIX IPTV.";
+    const phoneNumber = "5544991082160";
+    const message = "🎬 Olá! Gostaria de saber mais sobre os planos do ELITEFLIX e começar meu teste grátis!";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -9,7 +10,7 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition-all duration-300 hover:scale-110"
+      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition-all duration-300 hover:scale-110 animate-bounce"
       aria-label="Contato via WhatsApp"
     >
       <svg 
