@@ -56,67 +56,73 @@ const PlatformIcons = () => {
         </div>
 
         <div className="relative overflow-hidden">
-          <style jsx>{`
+          <style>{`
             .animate-scroll {
-              animation: scroll 20s linear infinite;
+              animation: scroll 25s linear infinite;
             }
             @keyframes scroll {
               0% {
                 transform: translateX(0);
               }
               100% {
-                transform: translateX(-50%);
+                transform: translateX(-100%);
               }
             }
           `}</style>
           
-          <div className="flex animate-scroll">
+          <div className="flex animate-scroll" style={{ width: '200%' }}>
             {/* Primeiro conjunto */}
-            {platforms.map((platform, index) => (
-              <div
-                key={`first-${platform.name}-${index}`}
-                className="flex-shrink-0 px-2 w-48"
-              >
-                <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
-                  <img 
-                    src={platform.logo} 
-                    alt={platform.name}
-                    className="max-w-full max-h-full object-contain filter brightness-0 invert"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-white font-bold text-sm">${platform.name}</span>`;
-                      }
-                    }}
-                  />
+            <div className="flex" style={{ width: '50%' }}>
+              {platforms.map((platform, index) => (
+                <div
+                  key={`first-${platform.name}-${index}`}
+                  className="flex-shrink-0 px-2"
+                  style={{ width: `${100 / platforms.length}%` }}
+                >
+                  <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
+                    <img 
+                      src={platform.logo} 
+                      alt={platform.name}
+                      className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-white font-bold text-sm">${platform.name}</span>`;
+                        }
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
             {/* Segundo conjunto para loop infinito */}
-            {platforms.map((platform, index) => (
-              <div
-                key={`second-${platform.name}-${index}`}
-                className="flex-shrink-0 px-2 w-48"
-              >
-                <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
-                  <img 
-                    src={platform.logo} 
-                    alt={platform.name}
-                    className="max-w-full max-h-full object-contain filter brightness-0 invert"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-white font-bold text-sm">${platform.name}</span>`;
-                      }
-                    }}
-                  />
+            <div className="flex" style={{ width: '50%' }}>
+              {platforms.map((platform, index) => (
+                <div
+                  key={`second-${platform.name}-${index}`}
+                  className="flex-shrink-0 px-2"
+                  style={{ width: `${100 / platforms.length}%` }}
+                >
+                  <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
+                    <img 
+                      src={platform.logo} 
+                      alt={platform.name}
+                      className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-white font-bold text-sm">${platform.name}</span>`;
+                        }
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

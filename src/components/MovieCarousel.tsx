@@ -51,69 +51,75 @@ const MovieCarousel = () => {
         </div>
 
         <div className="relative overflow-hidden">
-          <style jsx>{`
+          <style>{`
             .animate-scroll-movies {
-              animation: scrollMovies 25s linear infinite;
+              animation: scrollMovies 30s linear infinite;
             }
             @keyframes scrollMovies {
               0% {
                 transform: translateX(0);
               }
               100% {
-                transform: translateX(-50%);
+                transform: translateX(-100%);
               }
             }
           `}</style>
           
-          <div className="flex animate-scroll-movies">
+          <div className="flex animate-scroll-movies" style={{ width: '200%' }}>
             {/* Primeiro conjunto */}
-            {movies.map((movie, index) => (
-              <div 
-                key={`first-${movie.id}-${index}`}
-                className="flex-shrink-0 px-2 w-64"
-              >
-                <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                  <div className="relative aspect-[2/3] min-h-[300px]">
-                    <img 
-                      src={getTMDBImageUrl(movie.poster_path)} 
-                      alt={movie.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://images.unsplash.com/photo-1489599135554-d2b8ef55ab10?w=300&h=400&fit=crop';
-                      }}
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h4 className="text-white font-semibold text-sm line-clamp-2">{movie.title}</h4>
+            <div className="flex" style={{ width: '50%' }}>
+              {movies.map((movie, index) => (
+                <div 
+                  key={`first-${movie.id}-${index}`}
+                  className="flex-shrink-0 px-2"
+                  style={{ width: `${100 / movies.length}%` }}
+                >
+                  <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div className="relative aspect-[2/3] min-h-[300px]">
+                      <img 
+                        src={getTMDBImageUrl(movie.poster_path)} 
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.unsplash.com/photo-1489599135554-d2b8ef55ab10?w=300&h=400&fit=crop';
+                        }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h4 className="text-white font-semibold text-sm line-clamp-2">{movie.title}</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
             {/* Segundo conjunto para loop infinito */}
-            {movies.map((movie, index) => (
-              <div 
-                key={`second-${movie.id}-${index}`}
-                className="flex-shrink-0 px-2 w-64"
-              >
-                <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                  <div className="relative aspect-[2/3] min-h-[300px]">
-                    <img 
-                      src={getTMDBImageUrl(movie.poster_path)} 
-                      alt={movie.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://images.unsplash.com/photo-1489599135554-d2b8ef55ab10?w=300&h=400&fit=crop';
-                      }}
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h4 className="text-white font-semibold text-sm line-clamp-2">{movie.title}</h4>
+            <div className="flex" style={{ width: '50%' }}>
+              {movies.map((movie, index) => (
+                <div 
+                  key={`second-${movie.id}-${index}`}
+                  className="flex-shrink-0 px-2"
+                  style={{ width: `${100 / movies.length}%` }}
+                >
+                  <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div className="relative aspect-[2/3] min-h-[300px]">
+                      <img 
+                        src={getTMDBImageUrl(movie.poster_path)} 
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.unsplash.com/photo-1489599135554-d2b8ef55ab10?w=300&h=400&fit=crop';
+                        }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h4 className="text-white font-semibold text-sm line-clamp-2">{movie.title}</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
