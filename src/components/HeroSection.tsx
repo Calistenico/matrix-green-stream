@@ -19,7 +19,7 @@ const HeroSection = () => {
               <img 
                 src="/Logo Matrix.png" 
                 alt="Matrix IPTV Logo" 
-                className="w-32 h-32 md:w-48 md:h-48 object-contain"
+                className="w-24 h-24 md:w-32 md:h-32 object-contain"
               />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-2">
