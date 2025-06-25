@@ -2,9 +2,6 @@
 import { useEffect, useState } from 'react';
 
 const PlatformIcons = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-
   const platforms = [
     { 
       name: 'Paramount+', 
@@ -48,38 +45,6 @@ const PlatformIcons = () => {
     }
   ];
 
-  // Duplicar as plataformas para criar loop infinito
-  const duplicatedPlatforms = [...platforms, ...platforms];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = prevIndex + 1;
-        // Reset instantâneo quando chegar ao final da primeira sequência
-        if (nextIndex >= platforms.length) {
-          setTimeout(() => {
-            setIsTransitioning(false);
-            setCurrentIndex(0);
-            setTimeout(() => setIsTransitioning(true), 50);
-          }, 1000);
-          return nextIndex;
-        }
-        return nextIndex;
-      });
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [platforms.length]);
-
-  const getSlidesPerView = () => {
-    if (typeof window === 'undefined') return 3;
-    if (window.innerWidth < 640) return 2;
-    if (window.innerWidth < 1024) return 3;
-    return 5;
-  };
-
-  const slidesPerView = getSlidesPerView();
-
   return (
     <div className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -91,18 +56,49 @@ const PlatformIcons = () => {
         </div>
 
         <div className="relative overflow-hidden">
-          <div 
-            className={`flex ${isTransitioning ? 'transition-transform duration-1000 ease-linear' : ''}`}
-            style={{ 
-              transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
-              width: `${(duplicatedPlatforms.length * 100) / slidesPerView}%`
-            }}
-          >
-            {duplicatedPlatforms.map((platform, index) => (
+          <style jsx>{`
+            .animate-scroll {
+              animation: scroll 20s linear infinite;
+            }
+            @keyframes scroll {
+              0% {
+                transform: translateX(0);
+              }
+              100% {
+                transform: translateX(-50%);
+              }
+            }
+          `}</style>
+          
+          <div className="flex animate-scroll">
+            {/* Primeiro conjunto */}
+            {platforms.map((platform, index) => (
               <div
-                key={`${platform.name}-${index}`}
-                className="flex-shrink-0 px-2"
-                style={{ width: `${100 / duplicatedPlatforms.length}%` }}
+                key={`first-${platform.name}-${index}`}
+                className="flex-shrink-0 px-2 w-48"
+              >
+                <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
+                  <img 
+                    src={platform.logo} 
+                    alt={platform.name}
+                    className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<span class="text-white font-bold text-sm">${platform.name}</span>`;
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+            {/* Segundo conjunto para loop infinito */}
+            {platforms.map((platform, index) => (
+              <div
+                key={`second-${platform.name}-${index}`}
+                className="flex-shrink-0 px-2 w-48"
               >
                 <div className={`${platform.bgColor} rounded-lg h-24 flex items-center justify-center p-4 hover:scale-105 transition-transform cursor-pointer`}>
                   <img 
